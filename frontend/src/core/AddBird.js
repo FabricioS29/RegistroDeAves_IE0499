@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navigation from "./Navigation";
 import { Link } from "react-router-dom";
-import { isAuthenticated, getCategories, createBird } from "./apiCore";
+import { isAuthenticated, createBird } from "./apiCore";
 
 
 const AddBird = () => {
@@ -10,8 +10,6 @@ const AddBird = () => {
         nameUSA: '',
         nameC: '',
         description: '',
-        categories: [],
-        category: '',
         photo: '',
         loading: false,
         error: '',
@@ -26,8 +24,6 @@ const AddBird = () => {
         nameUSA,
         nameC,
         description,
-        categories,
-        category,
         photo,
         loading,
         error,
@@ -36,21 +32,10 @@ const AddBird = () => {
         formData
     } = values; // values.nameCR, values.photo ...
 
-    // Requerir de todas las categorías
-    const init = () => {
-        getCategories().then(data => {
-            if (data.error) {
-                setValues({ ...values, error: data.error })
-            } else {
-                setValues({ ...values, categories: data, formData: new FormData() })
-            }
-        })
-    }
 
-    // Ejecutar apenas cuando se inicia el componente y muestre las categorías
     useEffect(() => {
         setValues({ ...values, formData: new FormData()});
-        init();
+        //init();
     }, []);
 
     const handleChange = name => event => {
@@ -73,14 +58,14 @@ const AddBird = () => {
             className='alert alert-info'
             style={{ display: createdBird ? '' : 'none'}}
         >
-            <h2>{`${createdBird} was succesfully created`}</h2>
+            <h2>{`${createdBird}, especie agregada`}</h2>
         </div>
     )
 
     const showLoading = () => 
         loading && (
         <div className='alert alert-success'>
-            <h2>Loading ...</h2>
+            <h2>Cargando...</h2>
         </div>
         )
 
@@ -108,7 +93,7 @@ const AddBird = () => {
 
     const newBirdForm = () => (
         <form className='mb-3' onSubmit={clickSubmit}>
-            <h4>Post Photo</h4>
+            <h5>Subir fotografía</h5>
             <div className='mb-3'>
                 <label className='btn btn-secondary'>
                     <input
@@ -120,7 +105,7 @@ const AddBird = () => {
                 </label>
             </div>
             <div className='mb-3'>
-                <label className='text-muted'>NameCR</label>
+                <label className='text-muted'>Nombre común</label>
                     <input
                         onChange={handleChange('nameCR')}
                         type='text'
@@ -129,7 +114,7 @@ const AddBird = () => {
                     />
             </div>
             <div className='mb-3'>
-                <label className='text-muted'>NameUSA</label>
+                <label className='text-muted'>Nombre en inglés</label>
                     <input
                         onChange={handleChange('nameUSA')}
                         type='text'
@@ -138,7 +123,7 @@ const AddBird = () => {
                     />
             </div>
             <div className='mb-3'>
-                <label className='text-muted'>NameC</label>
+                <label className='text-muted'>Nombre científico</label>
                     <input
                         onChange={handleChange('nameC')}
                         type='text'
@@ -147,31 +132,17 @@ const AddBird = () => {
                     />
             </div>
             <div className='mb-3'>
-                <label className='text-muted'>Description</label>
-                    <input
+                <label className='text-muted'>Descripción</label>
+                    <textarea
                         onChange={handleChange('description')}
                         type='text'
                         className='form-control'
                         value={description}
-                    />
+                        id="exampleFormControlTextarea1"
+                        rows="3"
+                    ></textarea>
             </div>
-            <div className='mb-3'>
-                <label className='text-muted'>Category</label>
-                    <select
-                        onChange={handleChange('category')}
-                        type='text'
-                        className='form-control form-select'
-                    >
-                        <option>Select Category</option>
-                        {categories &&
-                            categories.map((c, i) => (
-                                <option key={i} value={c._id}>
-                                    {c.name}
-                                </option>
-                            ))}
-                    </select>
-            </div>
-            <button className='btn btn-outline-primary'>New Species</button>
+            <button className='btn btn-outline-primary'>Agregar</button>
         </form>
     )
     
@@ -181,7 +152,7 @@ const AddBird = () => {
             <div className='container mt-5'>
                 <div className='row'>
                     <div className='col-md-8 offset-md-2'>
-                    <h2>Add a bird</h2>
+                    <h2 className="text-center mb-5">Agregar Nueva Especie</h2>
                     {showLoading()}
                     {showSuccess()}
                     {showError()}

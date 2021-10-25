@@ -45,7 +45,7 @@ const Signin = () => {
     const signInForm = () => (
         <form className="sign-box">
             <div className='mb-3'>
-                <label className='text-muted'>Email</label>
+                <label className='text-muted'>Correo electrónico</label>
                 <input
                     onChange={handleChange('email')}
                     type='email'
@@ -54,7 +54,7 @@ const Signin = () => {
                 />    
             </div>
             <div className='mb-3'>
-                <label className='text-muted'>Password</label>
+                <label className='text-muted'>Contraseña</label>
                 <input
                     onChange={handleChange('password')}
                     type='password'
@@ -63,7 +63,7 @@ const Signin = () => {
                 />    
             </div>
             <button onClick={clickSubmit} className='s-btn btn btn-primary'>
-                Sign In
+                Ingresar
             </button>
         </form>
     )
@@ -90,7 +90,7 @@ const Signin = () => {
     const ShowLoading = () => (
         loading && (
             <div className="alert alert-info">
-                <h2>Loading...</h2>
+                <h2>Cargando..</h2>
             </div>
         )
     )
@@ -100,7 +100,7 @@ const Signin = () => {
         <>
         <Navigation/>
         <div className="mt-5">
-            <h4 className="text-center mb-5">Log In</h4>
+            <h4 className="text-center mb-5">Iniciar Sesión</h4>
             {ShowError()}
             {ShowLoading()}
             {signInForm()}

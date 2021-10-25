@@ -14,17 +14,17 @@ exports.create = (req, res) => {
     form.parse(req, (err, fields, files) => {
         if (err) {
             return res.status(400).json({
-                error: "Image could not be uploaded"
+                error: "No se pudo cargar la imagen"
             })
         }
 
-        const { nameCR, nameUSA, nameC, descrption, category} = fields;
+        const { nameCR, nameUSA, nameC, descrption} = fields;
         let bird = new Bird(fields);
 
         if (files.photo) {
             if (files.photo.size > 5000000) {
                 return res.status(400).json({
-                    error: "Image should be less than 5MB in size"
+                    error: "La imagen debe tener un tamaño inferior a 5 MB"
                 })
             }
             bird.photo.data = fs.readFileSync(files.photo.path);
@@ -51,12 +51,11 @@ exports.list = (req, res) => {
 
     Bird.find()
         .select("-photo")
-        .populate("category")
         .sort([[sortBy, order]])
         .exec((err, birds) => {
             if (err) {
                 return res.status(400).json({
-                    error: "Birds not found"
+                    error: "Aves no encontradas"
                 })
             }
             res.json(birds);
@@ -78,7 +77,7 @@ exports.remove = (req, res) => {
             })
         }
         res.json({
-            message: "Bird was successfully deleted"
+            message: "Especie eliminada correctamente"
         })
     })
 }
@@ -86,11 +85,10 @@ exports.remove = (req, res) => {
 
 exports.birdById = (req, res, next, id) => {
     Bird.findById(id)
-    .populate("category")
     .exec((err, bird) => {
         if (err || !bird) {
             return res.json({
-                error: "Bird was not found or does not exist"
+                error: "La especie no se encontró o no existe"
             });
         }
         req.bird = bird;

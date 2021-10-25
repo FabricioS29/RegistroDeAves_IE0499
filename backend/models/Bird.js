@@ -27,11 +27,6 @@ const birdSchema = new mongoose.Schema(
             require: true,
             maxlength: 2000
         },
-        category: {
-            type: ObjectId,
-            ref: "Category",
-            require: "true"
-        },
         photo: {
             data: Buffer,
             contentType: String

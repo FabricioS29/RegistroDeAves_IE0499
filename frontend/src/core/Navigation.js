@@ -16,9 +16,9 @@ const isActive = (history, path) => {
 const Navigation = ({history}) => {
     return (
         <div>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav className="navbar navbar-expand-lg navbar-light" style={{backgroundColor: "#EBF5FB",  fontWeight: "bold"}}>
                 <div className="container">
-                    <a className="navbar-brand" href="#">Bird</a>
+                    <a className="navbar-brand" href="#">Aves de Zarcero</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -40,14 +40,14 @@ const Navigation = ({history}) => {
                                         <Link
                                             className="nav-link"
                                             to='/signup'>
-                                            Singup
+                                            Regístrate
                                         </Link>
                                     </NavItem>
                                     <NavItem className="nav-link">
                                         <Link
                                             className="nav-link"
                                             to='/signin'>
-                                            Login
+                                            Iniciar Sesión
                                         </Link>
                                     </NavItem>
                                 </>
@@ -55,18 +55,8 @@ const Navigation = ({history}) => {
                             { isAuthenticated() && (
                                <>
                                     <NavItem className="nav-link">
-                                        <Link to="/" className="nav-link">
-                                            Profile
-                                        </Link>
-                                    </NavItem>
-                                    <NavItem className="nav-link">
-                                        <Link to="/addcategory" className="nav-link">
-                                            Add Category
-                                        </Link>
-                                    </NavItem>
-                                    <NavItem className="nav-link">
                                         <Link to="/addbird" className="nav-link">
-                                            Add Bird
+                                            Agregar Nueva Especie
                                         </Link>
                                     </NavItem>
                                     <NavItem className="nav-link">
@@ -76,7 +66,7 @@ const Navigation = ({history}) => {
                                             signout(() => {
                                                 history.push("/");
                                             })} className="nav-link">
-                                            Logout
+                                            Cerrar Sesión
                                         </Link>
                                     </NavItem>
                                </> 

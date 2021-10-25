@@ -12,7 +12,7 @@ exports.signup = (req, res) => {
         console.log("reached signup endpoint")
         if (error) {
             return res.status(400).json({
-                message: "please check fields, there was Error"
+                message: "Por favor revisar, hubo un error"
             })
         }
         user.salt = undefined;
@@ -32,14 +32,14 @@ exports.signin = (req, res) => {
     User.findOne({email}, (error, user) => {
         if (error||!user) {
             return res.status(400).json({
-                error: 'User with that email does not exist'
+                error: 'El usuario con ese correo electrónico no existe'
             });
         }
         // if user is found make sure the email and password match
         // create authenticate method in user model
         if (!user.authenticate(password)) {
             return res.status(401).json({
-                error: 'Email and password don\'t match'
+                error: 'El correo electrónico y la contraseña no coinciden'
             });
         }
         const token = jwt.sign({_id:user._id}, process.env.JWT_SECRET)
@@ -53,7 +53,7 @@ exports.signin = (req, res) => {
 
 exports.signout = (req, res) => {
     res.clearCookie('t')
-    res.json({message: "Singout success"});
+    res.json({message: "Éxito al cerrar sesión"});
 };
 
 // Verificar que el usuario ha ingresado
@@ -61,7 +61,7 @@ exports.userById = (req, res, next, id) => {
     User.findById(id).exec((err,user) => {
         if(err||!user) {
             return res.status(400).json({
-                error: "User not found"
+                error: "Usuario no encontrado"
             });
         }
         req.profile = user;

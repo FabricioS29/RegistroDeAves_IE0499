@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { read } from "./apiCore";
-import Card from './Card';
+import CardBird from './CardBird';
 import Navigation from './Navigation';
 
 const Bird = (props) => {
@@ -26,10 +26,9 @@ const Bird = (props) => {
         <>
             <Navigation/>
             <div className='container'>
-                <h2>This is the bird page</h2>
                 {
                     bird && 
-                    <Card bird={bird}/>
+                    <CardBird bird={bird}/>
                 }
             </div>
         </>

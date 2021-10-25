@@ -43,7 +43,7 @@ const Signup = () => {
     const signUpForm = () => (
         <form className="sign-box">
             <div className='mb-3'>
-                <label className='text-muted'>Name</label>
+                <label className='text-muted'>Nombre</label>
                 <input
                     onChange={handleChange('name')}
                     value={name}
@@ -52,7 +52,7 @@ const Signup = () => {
                 />    
             </div>
             <div className='mb-3'>
-                <label className='text-muted'>email</label>
+                <label className='text-muted'>Correo electrónico</label>
                 <input
                     onChange={handleChange('email')}
                     value={email}
@@ -61,7 +61,7 @@ const Signup = () => {
                 />    
             </div>
             <div className='mb-3'>
-                <label>Password</label>
+                <label className='text-muted'>Contraseña</label>
                 <input
                     onChange={handleChange('password')}
                     value={password}
@@ -70,7 +70,7 @@ const Signup = () => {
                 />    
             </div>
             <button onClick={clickSubmit} className='btn btn-primary'>
-                Sign up
+                Registrarse
             </button>
         </form>
     );
@@ -83,7 +83,7 @@ const Signup = () => {
 
     const showSuccess = () => (
         <div className='alert alert-info' style={{ display: success ? '' : 'none' }}>
-            <Link to='/signin'>Sign in</Link>
+            <Link to='/signin'>Iniciar Sesión</Link>
         </div>
     )
 
@@ -92,7 +92,7 @@ const Signup = () => {
         <>
             <Navigation/>
             <div className="mt-5">
-                <h4 className="text-center mb-5">Signup form</h4>
+                <h4 className="text-center mb-5">Regístrate</h4>
                 {signUpForm()}
                 {showError()}
                 {showSuccess()}

@@ -13,7 +13,7 @@ const Card = ({bird}) => {
                 <h2>{bird.nameCR}</h2>
                 <p><i>{bird.nameC}</i></p>
                 <Link to={`/bird/${bird._id}`}>
-                    <button className="btn btn-success">Leer mas</button>
+                    <button className="btn btn-primary">Leer mas</button>
                 </Link>
             </div>
         </div>

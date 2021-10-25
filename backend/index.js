@@ -22,7 +22,6 @@ mongoose.connect(process.env.DATABASE, {
 }).then(() => {console.log("Coneccion de base de datos exitosa!")})
 
 // Routes setup
-app.use('/api/category', require('./routes/category'));
 app.use('/api/bird', require('./routes/bird'));
 app.use('/api/auth', require('./routes/auth'));
 
