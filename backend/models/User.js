@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
 {timestamps: true}
 );
 
-// virtual field for password hash
+// Campo virtual para hash de contraseña
 userSchema.virtual('password')
 .set(function(password) {
     this._password = password;
@@ -44,7 +44,7 @@ userSchema.virtual('password')
 
 userSchema.methods = {
     authenticate: function(plainText) {
-        return this.encryptPassword(plainText) == this.hashed_password;
+        return this.encryptPassword(plainText) == this.hashed_password; // Comparar la contraseña en tiempo real con el hash
     },
 
     encryptPassword: function(password) {

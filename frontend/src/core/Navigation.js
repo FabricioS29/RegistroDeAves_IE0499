@@ -52,7 +52,7 @@ const Navigation = ({history}) => {
                                     </NavItem>
                                 </>
                             )}
-                            { isAuthenticated() && (
+                            { isAuthenticated() &&  (
                                <>
                                     <NavItem className="nav-link">
                                         <Link to="/addbird" className="nav-link">
@@ -71,7 +71,6 @@ const Navigation = ({history}) => {
                                     </NavItem>
                                </> 
                             )}
-                            
                         </ul>    
                     </div>
                 </div>

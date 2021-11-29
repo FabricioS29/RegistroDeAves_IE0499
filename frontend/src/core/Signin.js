@@ -43,7 +43,7 @@ const Signin = () => {
     }
 
     const signInForm = () => (
-        <form className="sign-box">
+        <form className="signin-box">
             <div className='mb-3'>
                 <label className='text-muted'>Correo electrónico</label>
                 <input
@@ -71,7 +71,7 @@ const Signin = () => {
     const redirectUser = () => {
         if(redirectToReferrer) {
             if(user && user.role === 1) {
-                return <Redirect to="/admin/dashboard" />
+                return <Redirect to="/" />
             } else {
                 return <Redirect to="/" />
             }

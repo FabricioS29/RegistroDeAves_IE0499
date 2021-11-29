@@ -7,7 +7,7 @@ const Bird = require('../models/Bird');
 const { errorHandler } = require('../helpers/dberrorHandler');
 
 
-
+// Agregar nueva especie
 exports.create = (req, res) => {
     let form = new formidable.IncomingForm();
     form.keepExtensions = true;
@@ -18,7 +18,7 @@ exports.create = (req, res) => {
             })
         }
 
-        const { nameCR, nameUSA, nameC, descrption} = fields;
+        const { nameCR, nameUSA, nameC, observation,  descrption} = fields;
         let bird = new Bird(fields);
 
         if (files.photo) {
@@ -45,13 +45,14 @@ exports.create = (req, res) => {
 
 }
 
+// Listar las especies de la base de datos
 exports.list = (req, res) => {
-    let order = req.query.order ? req.query.order : 'asc'
-    let sortBy = req.query.sortBy ? req.query.sortBy : 'nameCR';   // Orden de la lista
+    let order = req.query.order ? req.query.order : 'asc' // Orden ascendente
+    let sortBy = req.query.sortBy ? req.query.sortBy : 'nameCR';   // Orden por de la lista
 
     Bird.find()
-        .select("-photo")
-        .sort([[sortBy, order]])
+        .select("-photo") // No queremos la foto
+        .sort([[sortBy, order]]) // Orden
         .exec((err, birds) => {
             if (err) {
                 return res.status(400).json({
@@ -62,12 +63,13 @@ exports.list = (req, res) => {
         })
 }
 
+// Escoger especie seleccionada
 exports.read = (req, res) => {
-    req.bird.photo = undefined;
+    req.bird.photo = undefined; // No queremos que nos pase la foto
     return res.json(req.bird);
 }
 
-
+// Eliminar especie de la base de datos
 exports.remove = (req, res) => {
     let bird = req.bird
     bird.remove((err, deletedBird) => {
@@ -82,7 +84,7 @@ exports.remove = (req, res) => {
     })
 }
 
-
+// id de especie en base de datos
 exports.birdById = (req, res, next, id) => {
     Bird.findById(id)
     .exec((err, bird) => {
@@ -96,7 +98,7 @@ exports.birdById = (req, res, next, id) => {
     })
 }
 
-
+// Extraer la foto de la especie
 exports.photo = (req, res, next) => {
     if (req.bird.photo.data) {
         res.set('Content-Type', req.bird.photo.contentType);

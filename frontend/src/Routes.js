@@ -6,6 +6,7 @@ import Signup from './core/Signup';
 import Signin from './core/Signin';
 import AddBird from './core/AddBird';
 import Bird from './core/Bird';
+import DeletedBird from './core/DeletedBird';
 
 const Routes = () => {
     return (
@@ -16,6 +17,7 @@ const Routes = () => {
                 <Route path='/signin' exact component={Signin} />
                 <Route path='/signup' exact component={Signup} />
                 <Route path='/addbird' exact component={AddBird} />
+                <Route path='/deletedbird/:birdId' exact component={DeletedBird} />
             </Switch>
         </BrowserRouter>
     )

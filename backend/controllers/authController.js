@@ -6,18 +6,18 @@ const expressJwt = require('express-jwt');
 
 // Sign up (Registrarse)
 exports.signup = (req, res) => {
-    console.log('req.body', req.body); // {"name:" "Arturo Filio", "email:" "test@test.com", "password:" "test123"}
+    console.log('req.body', req.body); // imprime el body: {"name:" "Arturo Filio", "email:" "test@test.com", "password:" "test123"}
     const user = new User(req.body); // crear nuevo usurario
     user.save((error, user) => {
-        console.log("reached signup endpoint")
+        console.log("Punto final del registro")
         if (error) {
             return res.status(400).json({
                 message: "Por favor revisar, hubo un error"
             })
         }
-        user.salt = undefined;
+        user.salt = undefined; // Cuando se guarde el usuario no queremos que se vea la salt ni el hash
         user.hashed_password = undefined;
-        res.json({
+        res.json({ //Regresa el usuario
             user
         })
     })
@@ -25,56 +25,41 @@ exports.signup = (req, res) => {
 
 
 // sing in / login (ingresar)
-
 exports.signin = (req, res) => {
-    // find the user on email
-    const {email, password} = req.body
+    // Encontrar al usuario en el correo electrónico
+    const {email, password} = req.body // Requerir del body (User) el email y password
     User.findOne({email}, (error, user) => {
         if (error||!user) {
             return res.status(400).json({
                 error: 'El usuario con ese correo electrónico no existe'
             });
         }
-        // if user is found make sure the email and password match
-        // create authenticate method in user model
+        // Si se encuentra el usuario asegurar que correo y contraseña coincidan
+        // Crear método de auntenticación en el modelo de usuario
         if (!user.authenticate(password)) {
             return res.status(401).json({
                 error: 'El correo electrónico y la contraseña no coinciden'
             });
         }
-        const token = jwt.sign({_id:user._id}, process.env.JWT_SECRET)
-        // persist the token as 't' in cookie with expiration date
-        res.cookie('t', token, {expire: new Date() + 9999})
-        // return response with user and token to frontend client
+        const token = jwt.sign({_id:user._id}, process.env.JWT_SECRET, { expiresIn: 60 * 60 }) 
+        // Crear un token con un nivel de seguridad
+        // Conservar el token como 't' en la cookie con fecha de vencimiento
+        
+        res.cookie('t', token, { expires: new Date(Date.now() + 900000), httpOnly: true })
+        //res.cookie('t', token, {expire: new Date(0) })
+        //res.cookie('t', token, { maxAge: 6, httpOnly: true })
+        //res.cookie('t', token, {expires: new Date(Date.now() + 6000), httpOnly : false })
+
+        // Devolver la respuesta con el usuario y el token al cliente en el front
         const {_id, name, email, role} = user
         return res.json({token, user: {_id, email, name, role}})
     });
 }
 
+// Cerrar sesión
 exports.signout = (req, res) => {
     res.clearCookie('t')
     res.json({message: "Éxito al cerrar sesión"});
 };
 
-// Verificar que el usuario ha ingresado
-exports.userById = (req, res, next, id) => {
-    User.findById(id).exec((err,user) => {
-        if(err||!user) {
-            return res.status(400).json({
-                error: "Usuario no encontrado"
-            });
-        }
-        req.profile = user;
-        next()
-    });
-}
 
-//exports.isAdmin = (req, res, next) => {
-//    let user = req.profile && req.auth && req.profile._id == req.auth._id
-//    if(!user) {
-//        return res.status(403).json({
-//            error: 'Access denied'
-//        });
-//    }
-//    next();
-//}

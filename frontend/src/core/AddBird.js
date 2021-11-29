@@ -9,6 +9,7 @@ const AddBird = () => {
         nameCR: '',
         nameUSA: '',
         nameC: '',
+        observation: '',
         description: '',
         photo: '',
         loading: false,
@@ -23,6 +24,7 @@ const AddBird = () => {
         nameCR,
         nameUSA,
         nameC,
+        observation,
         description,
         photo,
         loading,
@@ -35,7 +37,6 @@ const AddBird = () => {
 
     useEffect(() => {
         setValues({ ...values, formData: new FormData()});
-        //init();
     }, []);
 
     const handleChange = name => event => {
@@ -72,7 +73,7 @@ const AddBird = () => {
     const clickSubmit = event => {
         event.preventDefault()
         setValues({ ...values, error: '', loading: true })
-        createBird(user._id, token, formData).then(data => {
+        createBird(token, formData).then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error })
             } else {
@@ -81,6 +82,7 @@ const AddBird = () => {
                     nameCR: '',
                     nameUSA: '',
                     nameC: '',
+                    observation: '',
                     description: '',
                     photo: '',
                     loading: false,
@@ -132,6 +134,15 @@ const AddBird = () => {
                     />
             </div>
             <div className='mb-3'>
+                <label className='text-muted'>Lugar del avistamiento</label>
+                    <input
+                        onChange={handleChange('observation')}
+                        type='text'
+                        className='form-control'
+                        value={observation}
+                    />
+            </div>
+            <div className='mb-3'>
                 <label className='text-muted'>Descripción</label>
                     <textarea
                         onChange={handleChange('description')}
@@ -149,7 +160,7 @@ const AddBird = () => {
     return (
         <>
             <Navigation/>
-            <div className='container mt-5'>
+            <div className='container mt-5 mb-5'>
                 <div className='row'>
                     <div className='col-md-8 offset-md-2'>
                     <h2 className="text-center mb-5">Agregar Nueva Especie</h2>

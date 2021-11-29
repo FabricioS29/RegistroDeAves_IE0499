@@ -101,7 +101,7 @@ export const isAuthenticated = () => {
 
 
 // ${userId} `${API}/category/create/${userId}`
-export const createBird = (userId, token, bird) => {
+export const createBird = (token, bird) => {
     return fetch(`${API}/bird/create/`, {
         method: 'POST',
         headers: {
@@ -117,3 +117,17 @@ export const createBird = (userId, token, bird) => {
             console.log(err)
         })
 }
+
+
+// Eliminar una especie
+export const deletedBird = (birdId) => {
+    return fetch(`${API}/bird/${birdId}`, {
+    method: "DELETE"
+    })
+    .then(response => {
+        return response.json();
+    })
+    .catch(err => {
+        console.log(err);
+    })
+  }

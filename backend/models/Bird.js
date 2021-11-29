@@ -21,6 +21,12 @@ const birdSchema = new mongoose.Schema(
             require: true,
             maxlength: 32
         },
+        observation: {
+            type: String,
+            trim: true,
+            require: true,
+            maxlength: 40
+        },
         description: {
             type: String,
             trim: true,
